@@ -21,6 +21,7 @@ read site
 # Cílová cesta
 target="/var/www/html/$site"
 
+
 # Kontrola, zda už existuje
 if [ -d "$target" ]; then
     echo -e "${RED}Adresář $target již existuje.${RESET}"
@@ -38,8 +39,12 @@ chmod 755 "$target"
 echo "<h1>$site</h1>" > "$target/index.html"
 echo "<p>Vitejte na webu $site</p>" >> "$target/index.html"
 
+# Zjištění IP adresy serveru
+IP=$(hostname -I | awk '{print $1}')
+
 # Barevná zelená zpráva
 echo -e "${GREEN}---------------------------------------"
 echo -e "Web '$site' byl vytvořen v $target"
+echo -e "Web je dostupný na: http://$IP/$site.cz"
 echo -e "---------------------------------------${RESET}"
 echo
