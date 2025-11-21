@@ -45,6 +45,6 @@ IP=$(hostname -I | awk '{print $1}')
 # Barevná zelená zpráva
 echo -e "${GREEN}---------------------------------------"
 echo -e "Web '$site' byl vytvořen v $target"
-echo -e "Web je dostupný na: http://$IP/$site.cz"
+echo -e "Web je dostupný na: http://$IP/$site"
 echo -e "---------------------------------------${RESET}"
 echo
