@@ -14,7 +14,8 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 
-read -p "${YELLOW}Zadejte název webu ke smazání (např. caje.cz): ${RESET}" site
+echo -e "${YELLOW}Zadejte název webu ke smazání (např. caje.cz):${RESET} "
+read site
 
 target="/var/www/html/$site"
 
