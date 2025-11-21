@@ -14,7 +14,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 
-echo -e "${YELLOW}Zadejte název webu ke smazání (např. caje.cz):${RESET} "
+echo -en "${YELLOW}Zadejte název webu ke smazání (např. caje.cz):${RESET} "
 read site
 
 target="/var/www/html/$site"
@@ -26,7 +26,9 @@ if [ ! -d "$target" ]; then
 fi
 
 # Potvrzení
-read -p "${RED}Opravdu chcete smazat $target? (y/n):${RESET} " confirm
+
+echo -en "${RED}Opravdu chcete smazat $target? (y/n):${RESET} "
+read confirm
 if [ "$confirm" != "y" ]; then
     echo -e "${GREEN}Odstranění bylo zrušeno.${RESET}"
     exit 0
