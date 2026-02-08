@@ -21,7 +21,8 @@ Weby jsou následně dostupné na:
 Vytváří nový web:
 
 - vytvoří adresář `/var/www/html/<nazev>`
-- nastaví vhodná oprávnění pro uživatele `www-data`
+- nastaví majitele na uživatele (není potřeba sudo)
+- nastaví skupinu pro uživatele `www-data` (Apache)
 - vytvoří jednoduchý `index.html`
 - zobrazí barevné potvrzení
 
