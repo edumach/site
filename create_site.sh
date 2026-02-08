@@ -6,14 +6,16 @@ YELLOW="\e[93m"
 RED="\e[91m"
 RESET="\e[0m"
 
+owner=${SUDO_USER:-$USER}
+
 # ----------------------------------
 # změna výchozích oprávnění souborů
-owner=${SUDO_USER:-$USER}
-profile="/home/$owner/.profile"
-grep -q "^umask 002" "$profile" 2>/dev/null || \
-echo "umask 002" >> "$profile"
-chown "$owner":"$owner" "$profile"
+um="/etc/profile.d/umask.sh"
+grep -q "^umask 002" "$um" 2>/dev/null || \
+sh -c 'echo "umask 002" > "$um"' && \
+chmod 644 "$um"
 # ----------------------------------
+
 
 # Skript vytvoří nový web jako adresář ve /var/www/html
 # a nastaví vlastníka na $USER. Nebude pořeba
