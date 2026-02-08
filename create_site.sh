@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # Skript vytvoří nový web jako adresář ve /var/www/html
+# a nastaví vlastníka na $USER. Nebude pořeba
+# do v něm potřeba pracovat pod sudo 
 
 GREEN="\e[92m"
 YELLOW="\e[93m"
@@ -14,13 +16,11 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-
 echo -en "${YELLOW}Zadejte název webu (např. caje.cz): ${RESET}"
 read site
 
 # Cílová cesta
 target="/var/www/html/$site"
-
 
 # Kontrola, zda už existuje
 if [ -d "$target" ]; then
@@ -31,8 +31,8 @@ fi
 # Vytvoření adresáře
 mkdir -p "$target"
 
-# Nastavení práv
-chown -R www-data:www-data "$target"
+# Nastavení práv. Vlastník je user, skupina www-data (Apache)
+chown -R $USER:www-data "$target"
 chmod 755 "$target"
 
 # Vytvoření jednoduchého index.html
