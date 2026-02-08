@@ -1,14 +1,23 @@
 #!/bin/bash
 
-# Skript vytvoří nový web jako adresář ve /var/www/html
-# a nastaví vlastníka na $USER. Nebude pořeba
-# do v něm potřeba pracovat pod sudo 
 
 GREEN="\e[92m"
 YELLOW="\e[93m"
 RED="\e[91m"
 RESET="\e[0m"
 
+# ----------------------------------
+# změna výchozích oprávnění souborů
+owner=${SUDO_USER:-$USER}
+profile="/home/$owner/.profile"
+grep -q "^umask 002" "$profile" 2>/dev/null || \
+echo "umask 002" >> "$profile"
+chown "$owner":"$owner" "$profile"
+# ----------------------------------
+
+# Skript vytvoří nový web jako adresář ve /var/www/html
+# a nastaví vlastníka na $USER. Nebude pořeba
+# do v něm potřeba pracovat pod sudo 
 
 # Kontrola root oprávnění
 if [[ $EUID -ne 0 ]]; then
@@ -32,8 +41,10 @@ fi
 mkdir -p "$target"
 
 # Nastavení práv. Vlastník je user, skupina www-data (Apache)
-chown -R $USER:www-data "$target"
-chmod 755 "$target"
+chown -R "$owner":www-data "$target"
+# adresář: vlastník a skupina mohou zapisovat
+# 2755 = 
+chmod 2775 "$target"
 
 # Vytvoření jednoduchého index.html
 echo "<h1>$site</h1>" > "$target/index.html"
